@@ -8,6 +8,13 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    lintOptions {
+        // set to true to turn off analysis progress reporting by lint
+        quiet true
+        abortOnError true
+        ignoreWarnings true
+    }
 }
 
 dependencies {

@@ -51,13 +51,18 @@ public class ApproveActivityDelegate {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
             builder.setMessage(request.getPreRequestRationale())
-                    .setPositiveButton("I understand!", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(request.getPositiveButtonLabel(), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             requestAppPermissionsReal(request);
                         }
-                    })
-                    .show();
+                    });
+
+            if (request.hasDialogTitle()) {
+                builder.setTitle(request.getDialogTitle());
+            }
+
+            builder.show();
         } else {
             requestAppPermissionsReal(request);
         }
@@ -152,22 +157,25 @@ public class ApproveActivityDelegate {
             set(request.getRequestedPermission() + PREF_SUBGROUP_POST_RATIONALE_SHOWN);
 
             if (request.hasPostDeniedRequestRationale()) {
-                new AlertDialog.Builder(activity)
-                        .setTitle("Permission Denied")
-                        .setMessage(request.getPostDeniedRequestRationale())
-                        .setPositiveButton("I'm sure", new DialogInterface.OnClickListener() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setMessage(request.getPostDeniedRequestRationale())
+                        .setPositiveButton(request.getPositiveButtonLabel(), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 request.getRequestListener().onPermissionsDenied(request.getRequestCode(), request.getRequestedPermission());
                             }
                         })
-                        .setNegativeButton("Try Again", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(request.getTryAgainButtonLabel(), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 requestAppPermissions(request);
                             }
-                        })
-                        .show();
+                        });
+                if (request.hasDialogTitle()) {
+                    builder.setTitle(request.getDialogTitle());
+                }
+
+                builder.show();
                 return;
             }
         }
@@ -180,22 +188,26 @@ public class ApproveActivityDelegate {
         if ( ! hasShownRationaleBefore) {
             set(request.getRequestedPermission() + PREF_SUBGROUP_POST_RATIONALE_SETTINGS_SHOWN);
 
-            new AlertDialog.Builder(activity)
-                    .setTitle("Permission Denied")
-                    .setMessage("To turn on this permission you manually need to goto settings")
-                    .setPositiveButton("Take me to settings", new DialogInterface.OnClickListener() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            builder.setMessage(request.getManualOptionToChangePermissionsRationale())
+                    .setPositiveButton(request.getGotoSettingsButtonLabel(), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             startSettingsApp();
                         }
                     })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(request.getNegativeButtonLabel(), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             request.getRequestListener().onPermissionsDenied(request.getRequestCode(), request.getRequestedPermission());
                         }
-                    })
-                    .show();
+                    });
+
+            if (request.hasDialogTitle()) {
+                builder.setTitle(request.getDialogTitle());
+            }
+
+            builder.show();
             return;
         }
         request.getRequestListener().onPermissionsDenied(request.getRequestCode(), request.getRequestedPermission());

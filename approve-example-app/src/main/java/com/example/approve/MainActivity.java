@@ -14,19 +14,28 @@ import com.isalldigital.approve.RuntimePermissionsRequest;
 
 public class MainActivity extends ApproveActivity implements ApproveRequestListener {
 
-    private RuntimePermissionsRequest startLocationRequest = new RuntimePermissionsRequest.Builder()
-            .setRequestCode(200)
-            .setRequestedPermission(RuntimePermissions.PERMISSION_LOCATION)
-            .setShowPreRequestRationale("We need location for this awesome app!")
-            .setShowPostDeniedRequestRationale("Denied!") // error must be attached to activity to get string
-            .setShouldShowGotoSettingsOptionOnFail(true)
-            .setRequestListener(this)
-            .build();
+    private RuntimePermissionsRequest startLocationRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        startLocationRequest = new RuntimePermissionsRequest.Builder()
+                .setRequestCode(200)
+                .setRequestedPermission(RuntimePermissions.PERMISSION_LOCATION)
+                .setShowDialogTitle("Permission Request")
+                .setPositiveButtonLabel("Okay")
+                .setNegativeButtonLabel("Cancel")
+                .setTryAgainLabel("Ask me again!")
+                .setGotoSettingsButtonLabel("Start Settings")
+                .setManualOptionToChangePermissionsRationale("To turn on this permission you manually need to goto settings")
+                .setShowPostDeniedRequestRationale("You denied location permission :( You will not be able to use the awesome location aware functionality of this app!")
+                .setShowPreRequestRationale("We need location for this awesome app!")
+                .setShowPostDeniedRequestRationale("Denied!")
+                .setShouldShowGotoSettingsOptionOnFail(true)
+                .setRequestListener(this)
+                .build();
 
         Button requestPermissionButton = (Button) findViewById(R.id.button_request_permission);
         requestPermissionButton.setOnClickListener(new View.OnClickListener() {

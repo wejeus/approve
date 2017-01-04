@@ -26,5 +26,4 @@ dependencies {
     compile project(path: ':approve-lib')
     compile deps.appcompat
     testCompile deps.junit
-
 }

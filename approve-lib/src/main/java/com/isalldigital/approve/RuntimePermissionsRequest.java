@@ -9,6 +9,12 @@ public class RuntimePermissionsRequest {
     private String preRequestRationale;
     private String postDeniedRequestRationale;
     private boolean shouldShowGotoSettingsOptionOnFail;
+    private String positiveButtonLabel = "OK";
+    private String negativeButtonLabel = "Cancel";
+    private String dialogTitle;
+    private String tryAgainButtonLabel = "Try Again";
+    private String gotoSettingsButtonLabel = "Settings";
+    private String manualOptionToChangePermissionsRationale = "";
 
     public int getRequestCode() {
         return requestCode;
@@ -42,6 +48,34 @@ public class RuntimePermissionsRequest {
         return shouldShowGotoSettingsOptionOnFail;
     }
 
+    public String getPositiveButtonLabel() {
+        return positiveButtonLabel;
+    }
+
+    public String getNegativeButtonLabel() {
+        return negativeButtonLabel;
+    }
+
+    public boolean hasDialogTitle() {
+        return dialogTitle != null;
+    }
+
+    public String getDialogTitle() {
+        return dialogTitle;
+    }
+
+    public String getTryAgainButtonLabel() {
+        return tryAgainButtonLabel;
+    }
+
+    public String getGotoSettingsButtonLabel() {
+        return gotoSettingsButtonLabel;
+    }
+
+    public String getManualOptionToChangePermissionsRationale() {
+        return manualOptionToChangePermissionsRationale;
+    }
+
     public static class Builder {
         private RuntimePermissionsRequest request;
 
@@ -64,7 +98,6 @@ public class RuntimePermissionsRequest {
             return this;
         }
 
-        // @StringRes int textId
         public Builder setShowPreRequestRationale(String message) {
             request.preRequestRationale = message;
             return this;
@@ -90,6 +123,39 @@ public class RuntimePermissionsRequest {
          */
         public Builder setShouldShowGotoSettingsOptionOnFail(boolean show) {
             request.shouldShowGotoSettingsOptionOnFail = show;
+            return this;
+        }
+
+        public Builder setPositiveButtonLabel(String label) {
+            request.positiveButtonLabel = label;
+            return this;
+        }
+
+        public Builder setNegativeButtonLabel(String label) {
+            request.negativeButtonLabel = label;
+            return this;
+        }
+
+        /**
+         * Adds a dialog title if set otherwise none will be used
+         */
+        public Builder setShowDialogTitle(String title) {
+            request.dialogTitle = title;
+            return this;
+        }
+
+        public Builder setTryAgainLabel(String label) {
+            request.tryAgainButtonLabel = label;
+            return this;
+        }
+
+        public Builder setGotoSettingsButtonLabel(String label) {
+            request.gotoSettingsButtonLabel = label;
+            return this;
+        }
+
+        public Builder setManualOptionToChangePermissionsRationale(String message) {
+            request.manualOptionToChangePermissionsRationale = message;
             return this;
         }
 
