@@ -8,7 +8,7 @@ Download
 
 ```groovy
 dependencies {
-  compile 'com.isalldigital:approve:0.1.0-SNAPSHOT'
+  compile 'com.isalldigital:approve:0.2.0-SNAPSHOT'
 }
 ```
 
